@@ -1,0 +1,61 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+repositories{
+    maven {
+        name = "vault-repo"
+        url = "http://nexus.theyeticave.net/content/repositories/pub_releases"
+    }
+    maven {
+        name = "bukkit"
+        url = "http://repo.bukkit.org/content/groups/public/"
+    }
+}
+
+apply plugin: 'forge'
+
+version = "1.0.0"
+group= "ru.redenergy.vault"
+archivesBaseName = "forge-vault"
+
+minecraft {
+    version = "1.7.10-10.13.4.1541-1.7.10"
+    runDir = "eclipse"
+}
+
+dependencies {
+    compile('net.milkbowl.vault:VaultAPI:1.4')
+    compile('org.bukkit:bukkit:1.7.9-R0.2')
+}
+
+processResources{
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        expand 'version':project.version, 'mcversion':project.minecraft.version
+    }
+    
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+
+    from('api')   
+}
+
