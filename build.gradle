@@ -55,7 +55,14 @@ processResources{
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+    
+    into('/'){
+        println(findJar('VaultAPI-1.4').getClass())
+        from zipTree(findJar('VaultAPI-1.4').getAsPath());
+    }
+}
 
-    from('api')   
+def findJar(prefix){
+    configurations.runtime.filter { it.name.startsWith(prefix) }
 }
 
