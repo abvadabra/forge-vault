@@ -24,7 +24,7 @@ public class ForgeVault{
 	public static Chat chat;
 	
 
-	@Mod.Instance
+	@Mod.Instance("forge-vault")
 	public static ForgeVault instance;
 	
 	@SideOnly(Side.SERVER)
