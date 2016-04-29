@@ -29,7 +29,7 @@ repositories{
 }
 
 
-version = "1.0.0"
+version = "1.0.0-1.7.10"
 group= "ru.redenergy"
 archivesBaseName = "forge-vault"
 
@@ -39,26 +39,20 @@ minecraft {
     runDir = "eclipse"
 }
 
-dependencies {
-    compile('net.milkbowl.vault:VaultAPI:1.4')
-    compile('org.bukkit:bukkit:1.7.9-R0.2')
+configurations {
+    mod
+    compile.extendsFrom mod
 }
 
-publishing {
-    publications {
-        MainPublication(MavenPublication) {
-            from components.java
-            groupId project.group
-            artifactId 'forge-vault'
-            version project.version + "-1.7.10"
-        }
-    }
+dependencies {
+    mod 'net.milkbowl.vault:VaultAPI:1.4'
+    mod 'org.bukkit:bukkit:1.7.9-R0.2'
 }
 
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-    publications = ['MainPublication']
+    configurations = ['mod']
     pkg {
         repo = 'maven'
         name = 'forge-vault'
