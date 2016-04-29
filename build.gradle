@@ -40,26 +40,20 @@ minecraft {
     mappings = "snapshot_20160312"
 }
 
-dependencies {
-    compile('net.milkbowl.vault:VaultAPI:1.6')
-    compile('org.bukkit:bukkit:1.9-R0.1-SNAPSHOT')
+configurations {
+    mod
+    compile.extendsFrom mod
 }
 
-publishing {
-    publications {
-        MainPublication(MavenPublication) {
-            from components.java
-            groupId project.group
-            artifactId 'forge-vault'
-            version project.version + "-1.9"
-        }
-    }
+dependencies {
+    mod 'net.milkbowl.vault:VaultAPI:1.6'
+    mod 'org.bukkit:bukkit:1.9-R0.1-SNAPSHOT'
 }
 
 bintray {
     user = System.getenv('BINTRAY_USER')
     key = System.getenv('BINTRAY_KEY')
-    publications = ['MainPublication']
+    configurations = ['mod']
     pkg {
         repo = 'maven'
         name = 'forge-vault'
